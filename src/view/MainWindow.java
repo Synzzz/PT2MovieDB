@@ -434,25 +434,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void panicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_panicActionPerformed
         // TODO add your handling code here:
-        
-        Iterator<Lending> lendIterator=lendingTableModel.getLendings().iterator();
-        while(lendIterator.hasNext()){
-            Lending l=lendIterator.next();
-            if(!l.getMovie().isOriginal()){
-                lendingTableModel.deleteLendingSQL(l);
-                lendIterator.remove();
-            }
-        }
-        lendingTableModel.reloadTable();
-        Iterator<Movie> movieIterator=movieTableModel.getMovies().iterator();
-        while(movieIterator.hasNext()){
-            Movie m=movieIterator.next();
-            if(!m.isOriginal()){
-                movieTableModel.deleteMovieSQL(m);
-                movieIterator.remove();
-            }
-        }
-        movieTableModel.reloadTable();
+        lendingTableModel.deletePirated();
+        movieTableModel.deletePirated();
     }//GEN-LAST:event_panicActionPerformed
 
     private void returnMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnMovieActionPerformed
@@ -461,7 +444,6 @@ public class MainWindow extends javax.swing.JFrame {
             ReturnDialog returning=new ReturnDialog(this,true,selectedLending,lendingTableModel);
             movieTableModel.reloadTable();
             lendingTableModel.reloadTable();
-            
         }
         else{
             JOptionPane.showMessageDialog(this, "Please select a lending what you want to return");

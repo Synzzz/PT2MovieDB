@@ -91,6 +91,18 @@ public class MovieTableModel extends AbstractTableModel{
         fireTableDataChanged();
     }
     
+    public void deletePirated(){
+        Iterator<Movie> movieIterator=movies.iterator();
+        while(movieIterator.hasNext()){
+            Movie m=movieIterator.next();
+            if(!m.isOriginal()){
+                this.deleteMovieSQL(m);
+                movieIterator.remove();
+            }
+        }
+        reloadTable();
+    }
+    
     /**
      * Iterates over the movies arraylist and removes the one from the parameter (from the database too)
      * @param movie

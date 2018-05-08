@@ -86,6 +86,20 @@ public class LendingTableModel extends AbstractTableModel{
         fireTableDataChanged();
     }
     
+    
+    public void deletePirated(){
+        Iterator<Lending> lendIterator=lendings.iterator();
+        while(lendIterator.hasNext()){
+            Lending l=lendIterator.next();
+            if(!l.getMovie().isOriginal()){
+                this.deleteLendingSQL(l);
+                lendIterator.remove();
+            }
+        }
+        reloadTable();
+    }
+    
+    
     /**
      * Iterates over the lendings arraylist and removes the one from the parameter (from the database too)
      * @param lend

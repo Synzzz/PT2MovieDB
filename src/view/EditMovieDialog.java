@@ -74,8 +74,6 @@ public class EditMovieDialog extends javax.swing.JDialog {
             ii=new ImageIcon(scaleImage(image.getWidth(), image.getHeight(), ImageIO.read(new File(imageFile.getAbsolutePath()))));
             image.setIcon(ii);
         }catch(Exception e){};
-        System.out.println(storageType);
-        System.out.println(storage.getText());
         this.setVisible(true); 
     }
 
@@ -314,34 +312,18 @@ public class EditMovieDialog extends javax.swing.JDialog {
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         // TODO add your handling code here:
-        if(title.getText().length()==0 ||title.getText().length()==0){
+        if(title.getText().length()==0 ||director.getText().length()==0){
             JOptionPane.showMessageDialog(this, "Some data may be wrong or the movie already exists");
         }
         else{
             try{
-                Movie updatedMovie=new Movie(title.getText(),director.getText(),Integer.parseInt(year.getText()),lentState,Integer.parseInt(lentCounter.getText()),
+                movie.editMovie(title.getText(),director.getText(),Integer.parseInt(year.getText()),lentState,Integer.parseInt(lentCounter.getText()),
                     originalState,storageType,Integer.parseInt(length.getText()),mainCast.getText(),imageFile);
-                if(!updatedMovie.editNotAvailable()){
-                    movie.setTitle(title.getText());
-                    movie.setDirector(director.getText());
-                    movie.setYear(Integer.parseInt(year.getText()));
-                    movie.setLent(lentState);
-                    movie.setLentCount(Integer.parseInt(lentCounter.getText()));
-                    movie.setOriginal(originalState);
-                    movie.setStorageType(storageType);
-                    movie.setLength(Integer.parseInt(length.getText()));
-                    movie.setMainCast(mainCast.getText());
-                    movie.setImage(imageFile);
                     model.reloadTable();
                     this.dispose();
-                }
-                else{
+            } catch(Exception e){
                 JOptionPane.showMessageDialog(this, "Some data may be wrong");
-                }
-            } catch(IllegalArgumentException e){
-                JOptionPane.showMessageDialog(this, "Some data may be wrong");
-            } catch (FileNotFoundException ex) {}
-        
+            }
         }
     }//GEN-LAST:event_editActionPerformed
 

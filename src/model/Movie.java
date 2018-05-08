@@ -92,17 +92,17 @@ public class Movie {
     }
     
     /**
-     * Removes true if the newly edited movie data would conflict with one in the database
+     * Returns true if the newly edited movie data would conflict with one in the database
      * @return
      * @throws FileNotFoundException
      */
-    public boolean editNotAvailable() throws FileNotFoundException {
+    public boolean editNotAvailable(String origTitle,String origDirector ) throws FileNotFoundException {
         try {
             Connection conn = ConnectionFactory.getConnection();
             File file = new File(filePath);
             FileInputStream fis = new FileInputStream(file);
             
-            PreparedStatement ps = conn.prepareStatement("UPDATE movies SET title=?,director=?,prodYear=?,lent=?,lentCount=?,original=?,storageType=?,movieLength=?,mainCast=?,img=? WHERE title='"+title+"' AND director='"+director+"';");
+            PreparedStatement ps = conn.prepareStatement("UPDATE movies SET title=?,director=?,prodYear=?,lent=?,lentCount=?,original=?,storageType=?,movieLength=?,mainCast=?,img=? WHERE title='"+origTitle+"' AND director='"+origDirector+"';");
             ps.setString(1, title);
             ps.setString(2, director);
             ps.setInt(3,year);
@@ -116,8 +116,29 @@ public class Movie {
             return((ps.executeUpdate()==0) ? true:false);
         } catch (Exception ex) {
             System.err.println(ex.toString());
-            return true;
+            
         }
+        return true;
+    }
+    
+    
+    public void editMovie(String title, String director, int year, boolean lent, int lentCount, boolean original, String storageType, int length, String mainCast,File file) throws FileNotFoundException {
+        Movie updatedMovie=new Movie(title,director,year,lent,lentCount,original,storageType,length,mainCast,file);
+        if(!updatedMovie.editNotAvailable(this.title,this.director)){
+            this.setTitle(title);
+            this.setDirector(director);
+            this.setYear(year);
+            this.setLent(lent);
+            this.setLentCount(lentCount);
+            this.setOriginal(original);
+            this.setStorageType(storageType);
+            this.setLength(length);
+            this.setMainCast(mainCast);
+            this.setImage(file);  
+        }
+        else{
+            throw new IllegalArgumentException();
+        } 
     }
     
     /**
