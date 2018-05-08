@@ -1,4 +1,5 @@
-﻿A feladat teljes leírása:
+﻿
+A feladat teljes leírása:
 
 1. Filmek nyilvántartása
 Otthoni DVD, VHS filmjeinket szeretnénk nyilvántartani. A filmeket kölcsönadhatjuk a
