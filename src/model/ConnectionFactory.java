@@ -18,6 +18,8 @@ public class ConnectionFactory {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
+    //Localhost connection
+    /*
     public static Connection getConnection() 
         throws ClassNotFoundException, SQLException{
         if (conn == null){
@@ -31,7 +33,8 @@ public class ConnectionFactory {
         }
         return conn.getPooledConnection().getConnection();
     }
-    /*
+    */
+    //Public connection
     public static Connection getConnection() 
         throws ClassNotFoundException, SQLException{
         if (conn == null){
@@ -46,5 +49,5 @@ public class ConnectionFactory {
         }
         return conn.getPooledConnection().getConnection();
     }
-    */
+    
 }
